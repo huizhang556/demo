@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/06hh.jpg</file>
+        <file>src/bbeijing003.jpg</file>
+        <file>src/beijing002.jpg</file>
+        <file>src/beijing011.jpg</file>
+        <file>src/Beijing0042.jpg</file>
+        <file>src/bjeing00003.jpg</file>
+        <file>src/flower055.jpg</file>
+        <file>src/connectdb.jpg</file>
+        <file>src/exp.jpg</file>
+        <file>src/imp.jpg</file>
+        <file>src/exit.jpg</file>
+    </qresource>
+</RCC>
