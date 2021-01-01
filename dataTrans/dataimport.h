@@ -14,6 +14,7 @@ class dataImport : public QMainWindow
 public:
     explicit dataImport(QWidget *parent = 0);
     ~dataImport();
+    void closeEvent(QCloseEvent *e);//关闭窗口事件
 
 private:
     Ui::dataImport *ui;

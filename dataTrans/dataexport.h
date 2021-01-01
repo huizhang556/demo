@@ -5,6 +5,7 @@
 #include <QSqlTableModel>
 #include <QMenu>
 #include <QAction>
+#include <QStringList>
 
 namespace Ui {
 class dataExport;
@@ -18,18 +19,18 @@ public:
     explicit dataExport(QWidget *parent = 0);
     ~dataExport();
     void createRightMenu();//右键创建菜单
+    void createRightMenu2();//关于表名的右键菜单
     QMenu *popMenu;//菜单, 不能声明为私有变量，编译不通过
+    QMenu *popMenu2;
+    QString tableName;//表名
+    QStringList m_tableNameList;
+    void loadTableNameList();//加载数据库表
+
+    void closeEvent(QCloseEvent *e);//关闭窗口事件
 
 
 private slots:
 
-
-
-//   QAction *addItemAction;//添加项
-
-//   QAction *deleteItemAction;//删除项
-
-    void on_loadADirListBtn_clicked();//加载目录列表
 
     void on_referBtn_clicked();//表搜索
 
@@ -49,7 +50,11 @@ private slots:
 
     void slotContextMenu(QPoint pos);//右键菜单响应函数
 
+    void slotContextMenu2(QPoint pos);
+
     void on_lineEdit_textChanged(const QString &arg1);//自动搜索
+
+    void addTablesToList();//将表名添加到导出列表
 
 private:
     Ui::dataExport *ui;

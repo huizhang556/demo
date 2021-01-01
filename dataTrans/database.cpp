@@ -23,10 +23,6 @@ dataBase::~dataBase()
 //连接数据库
 void dataBase::connectDB()
 {
-    //打印Qt支持的数据库驱动
-    //QSqlDatabase::drivers();
-    //qDebug()<<QSqlDatabase::drivers();
-    //添加mysql数据库，用的是MySQL数据库
     QSqlDatabase db1 = QSqlDatabase::addDatabase("QMYSQL");
     //连接数据库
     db1.setHostName("127.0.0.1");//数据库服务器ip
@@ -37,7 +33,7 @@ void dataBase::connectDB()
     //打开数据库
      if(!db1.open())
       {
-         //QMessageBox::information(this,"连接提示","数据库连接失败！");
+         QMessageBox::information(this,"连接提示","数据库连接失败！");
          ui->label_status->setText("数据库连接失败！");
          QTimer::singleShot(1000,this,[=]{
          ui->label_status->setText("数据库未连接。。。");
@@ -45,10 +41,11 @@ void dataBase::connectDB()
      }
      else
      {
-         //QMessageBox::information(this,"连接提示","数据库连接成功！");
+         QMessageBox::information(this,"连接提示","数据库连接成功！");
          ui->label_status->setText("数据库连接成功！");
          QTimer::singleShot(1000,this,[=]{
          ui->label_status->setText("数据库已连接。。。");
+         emit staDbConStatus();
          });
 
      }

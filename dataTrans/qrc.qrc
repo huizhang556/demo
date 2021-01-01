@@ -11,5 +11,16 @@
         <file>src/exp.jpg</file>
         <file>src/imp.jpg</file>
         <file>src/exit.jpg</file>
+        <file>style/listview.qss</file>
+        <file>style/listview_h.qss</file>
+        <file>style/listview_v.qss</file>
+        <file>style/qwidget.qss</file>
+        <file>style/statusDbConPicLab.qss</file>
+        <file>style/statusTableNameLab.qss</file>
+        <file>style/statusTimeLab.qss</file>
+        <file>style/tableheadview_h.qss</file>
+        <file>style/tableheadview_v.qss</file>
+        <file>style/tableview_h.qss</file>
+        <file>style/tableview_v.qss</file>
     </qresource>
 </RCC>

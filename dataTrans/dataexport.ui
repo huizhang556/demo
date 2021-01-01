@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1260</width>
-    <height>652</height>
+    <width>1248</width>
+    <height>684</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,7 +62,19 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">QLineEdit
+{
+border:2px solid white;
+background-color: rgb(18, 204, 209);
+border-radius:5px;
+font:75 11pt &quot;仿宋&quot;;
+color:rgb(52,101,64);
+}
+QLineEdit:hover
+{
+background-color: rgb(238, 238, 236);
+}
+</string>
             </property>
            </widget>
           </item>
@@ -86,21 +98,26 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_tables"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="loadADirListBtn">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
+         <widget class="QTableView" name="tableView_tables">
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(170, 255, 127);</string>
-          </property>
-          <property name="text">
-           <string>加载目录列表</string>
+           <string notr="true">QTableView
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(5, 126, 158, 255));
+selection-background-color:rgb(30, 167, 160);
+selection-color: rgb(252, 233, 79);
+font:75 11pt &quot;仿宋&quot;;
+}
+
+QTableView:hover
+{
+border:2px inset red;
+}
+
+QTableView::item:hover
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(38, 218, 210, 255), stop:1 rgba(255, 255, 255, 255));
+}
+</string>
           </property>
          </widget>
         </item>
@@ -142,6 +159,21 @@
                 <height>31</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">QLineEdit
+{
+border:2px solid white;
+background-color: rgb(18, 204, 209);
+border-radius:5px;
+font:75 11pt &quot;仿宋&quot;;
+color:rgb(52,101,64);
+}
+QLineEdit:hover
+{
+background-color: rgb(238, 238, 236);
+}
+</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -177,11 +209,10 @@ border_radius:5px;
             <property name="styleSheet">
              <string notr="true">QTableView
 {
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(81, 181, 209, 255));
 alternate-background-color: rgb(135, 206, 250);
-selection-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.5, y2:0.5, stop:0 #ff92bb,  stop:1 white);
+selection-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.476923 rgba(133, 211, 203, 255),  stop:1 rgba(255,255,255,255));
 selection-color: rgb(239, 41, 41);
-border:2px solid green;
-border-radius:2px;
 color:rgb(0,0,0);
 }
 
@@ -189,7 +220,11 @@ QTableView:hover
 {
 border:2px inset red;
 }
-
+QTableView QTableCornerButton::section
+{
+background-color: rgb(173, 255, 47);
+border:0px outset red;
+}
 QTableView::item:hover
 {
 background-color: rgb(0,255,0);
@@ -198,18 +233,6 @@ border:1px solid #bfcde4;
 QTableView::item:selected
 {
 border:1px outset #567dbc;
-}
-QHeaderView::section {
-background-color: qlineargradient( x1:0, y1:0, x2:0, y2:1,
-stop:0 #616161, 
-stop: 0.5 #505050,
-stop: 0.6 #434343, stop:1 #656565);
-color: white;
-padding-left: 4px;
-border: 1px solid #6c6c6c;
-}
-QHeaderView::section:checked
-{background-color: red;
 }
 </string>
             </property>
@@ -353,6 +376,25 @@ QHeaderView::section:checked
                </widget>
               </item>
               <item>
+               <widget class="QLabel" name="label_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>40</width>
+                  <height>31</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>40</width>
+                  <height>31</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>当前第</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLineEdit" name="lineEdit_6">
                 <property name="minimumSize">
                  <size>
@@ -365,6 +407,40 @@ QHeaderView::section:checked
                   <width>35</width>
                   <height>16777215</height>
                  </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLineEdit
+{
+border:2px solid white;
+background-color: rgb(18, 204, 209);
+border-radius:5px;
+font:75 11pt &quot;仿宋&quot;;
+color:rgb(52,101,64);
+}
+QLineEdit:hover
+{
+background-color: rgb(238, 238, 236);
+}
+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>31</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>31</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>页，共1页。</string>
                 </property>
                </widget>
               </item>
@@ -495,7 +571,7 @@ QHeaderView::section:checked
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,4,2,1">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -525,6 +601,53 @@ QHeaderView::section:checked
                 <height>31</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">QLineEdit
+{
+border:2px solid white;
+background-color: rgb(18, 204, 209);
+border-radius:5px;
+font:75 11pt &quot;仿宋&quot;;
+color:rgb(52,101,64);
+}
+QLineEdit:hover
+{
+background-color:green;
+color:red;
+}
+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox">
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>55</width>
+                <height>31</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>格式</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>*.sql</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>*.xml</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item>
@@ -549,13 +672,19 @@ QHeaderView::section:checked
           <item>
            <widget class="QListView" name="listView">
             <property name="styleSheet">
-             <string notr="true">
-QListView
+             <string notr="true">QListView
 {
-selection-background-color: rgb(0, 255, 255);
-selection-color: rgb(255, 0, 0);
-border:2px solid green;
-border-radius:2px;
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(18, 83, 103, 255));
+selection-background-color: rgb(12, 232, 17);
+selection-color: rgb(239, 41, 41);
+color:rgb(63,230,235);
+font:75 11pt &quot;仿宋&quot;;
+border-top:4px solid rgb(63,230,235);
+}
+
+QListView::item
+{
+min-height:20px;
 }
 </string>
             </property>
@@ -593,8 +722,22 @@ border-radius:2px;
                 <height>30</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">QProgressBar{
+background-color: rgb(127, 255, 0);
+}
+
+QProgressBar::chunk{
+background-color:green;
+width:10px;
+margin:0.5px;
+}</string>
+              </property>
               <property name="value">
-               <number>0</number>
+               <number>20</number>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -613,7 +756,7 @@ border-radius:2px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1260</width>
+     <width>1248</width>
      <height>22</height>
     </rect>
    </property>

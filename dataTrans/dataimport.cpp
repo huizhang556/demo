@@ -3,6 +3,7 @@
 #include "dataexport.h"
 #include "database.h"
 #include <QMessageBox>
+#include <QCloseEvent>
 
 dataImport::dataImport(QWidget *parent) :
     QMainWindow(parent),
@@ -10,9 +11,9 @@ dataImport::dataImport(QWidget *parent) :
 {
     ui->setupUi(this);
      this->setWindowTitle("数据导入");
-//    this->setFixedSize(1010,760);//固定宽，高
-    ui->splitter->setStretchFactor(0,4);
-    ui->splitter->setStretchFactor(1,1);
+     this->setWindowState(Qt::WindowMaximized);
+//    ui->splitter->setStretchFactor(0,4);
+//    ui->splitter->setStretchFactor(1,1);
 
     dataBase *dbWin2 = new dataBase;
     connect(ui->action_condb1,&QAction::triggered,[=]{
@@ -40,7 +41,7 @@ dataImport::dataImport(QWidget *parent) :
         mymsgbox1->exec();//阻塞等待用户输入
         if (mymsgbox1->clickedButton()==okbtn1)//点击了OK按钮
         {
-            this->close();
+            this->hide();
         }
         else{
             this->show();
@@ -51,4 +52,18 @@ dataImport::dataImport(QWidget *parent) :
 dataImport::~dataImport()
 {
     delete ui;
+}
+
+void dataImport::closeEvent(QCloseEvent *e)
+{
+    switch(QMessageBox::information(this,tr("关闭窗口"),tr("确定要关闭程序？"),tr("确定"),tr("取消"),0,1))
+    {
+    case 0:
+        e->accept();
+        break;
+    case 1:
+    default:
+        e->ignore();
+        break;
+    }
 }

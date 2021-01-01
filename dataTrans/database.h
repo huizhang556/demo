@@ -20,9 +20,12 @@ private slots:
     void on_conndbBtn_clicked();//连接数据库按钮
 
     void on_exitBtn_clicked();//退出
+signals:
+    void staDbConStatus();
 
 private:
     Ui::dataBase *ui;
+
 };
 
 #endif // DATABASE_H

@@ -6,6 +6,9 @@
 #include <QMessageBox>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
+#include <QCloseEvent>
+#include <QStringListModel>
+#include <QDebug>
 
 dataExport::dataExport(QWidget *parent) :
     QMainWindow(parent),
@@ -13,19 +16,23 @@ dataExport::dataExport(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("数据导出");
-//  this->setFixedSize(1010,760);//固定宽，高
-//    ui->splitter->setStretchFactor(0,4);
-//    ui->splitter->setStretchFactor(1,1);
-//    ui->splitter_2->setStretchFactor(0,3);
-//    ui->splitter_2->setStretchFactor(1,7);
+    this->setWindowState(Qt::WindowMaximized);
 //  this->setCentralWidget(splitter_2);//不起作用
+
     ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);//表示这个tableview可以进行右键操作
+    ui->tableView_tables->setContextMenuPolicy(Qt::CustomContextMenu);
     createRightMenu();//创建右键菜单函数初始化
+    createRightMenu2();
     connect(ui->tableView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(slotContextMenu(QPoint)));//触发右键菜单信号，生产右键菜单
+    connect(ui->tableView_tables,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(slotContextMenu2(QPoint)));
 
     dataBase *dbWin = new dataBase;
     connect(ui->action_condb,&QAction::triggered,[=]{
         dbWin->show();
+    });
+
+    connect(dbWin,&dataBase::staDbConStatus,[=]{
+        loadTableNameList();
     });
 
     dataImport *impWin = new dataImport;
@@ -55,7 +62,7 @@ dataExport::dataExport(QWidget *parent) :
         mymsgbox->exec();//阻塞等待用户输入
         if (mymsgbox->clickedButton()==okbtn)//点击了OK按钮
         {
-            this->close();
+            this->hide();
         }
         else{
             this->show();
@@ -69,7 +76,7 @@ dataExport::~dataExport()
     delete ui;
 }
 
-//右键创建菜单项
+//右键创建菜单项tableview
 void dataExport::createRightMenu()
 {
     popMenu = new QMenu;
@@ -77,8 +84,14 @@ void dataExport::createRightMenu()
     popMenu->addAction("删除记录",this,SLOT(on_deletRecBtn_clicked()));
 }
 
-//加载目录列表
-void dataExport::on_loadADirListBtn_clicked()
+//关于表名的右键菜单tableview_tables
+void dataExport::createRightMenu2()
+{
+    popMenu2 = new QMenu;
+    popMenu2->addAction("添加至导出列表",this,SLOT(addTablesToList()));
+}
+
+void dataExport::loadTableNameList()
 {
     //点击界面“加载目录列表”按钮，加载所连接数据库中的所有数据库表
     QString str;
@@ -92,8 +105,47 @@ void dataExport::on_loadADirListBtn_clicked()
     ui->tableView_tables->setColumnWidth(0,250);
     ui->tableView_tables->verticalHeader()->hide();//表头排序隐藏
     ui->tableView_tables->show();
-
 }
+
+
+/*将表名添加到导出列表*/
+void dataExport::addTablesToList()
+{
+    QString addTableName = tableName;
+    bool flag = true;
+    for(int j=0;j<m_tableNameList.length();j++)
+    {
+       if(m_tableNameList.at(j) == addTableName)
+       {
+           flag = false;
+           QMessageBox::warning(this,"错误提示","该表已添加!");
+           return;
+       }
+
+    }
+    if(flag)
+        m_tableNameList.append(addTableName);
+    qDebug()<<m_tableNameList;
+    QStringListModel *listItemModel = new QStringListModel(m_tableNameList);
+    ui->listView->setModel(listItemModel);
+}
+
+
+//关闭窗口事件
+void dataExport::closeEvent(QCloseEvent *e)
+{
+    switch(QMessageBox::information(this,tr("关闭窗口"),tr("确定要关闭程序？"),tr("确定"),tr("取消"),0,1))
+    {
+    case 0:
+        e->accept();
+        break;
+    case 1:
+    default:
+        e->ignore();
+        break;
+    }
+}
+
 
 //表搜索
 void dataExport::on_referBtn_clicked()
@@ -118,9 +170,9 @@ void dataExport::on_referBtn_clicked()
 //点击某个表名，右侧显示这个表的具体数据内容
 void dataExport::on_tableView_tables_clicked(const QModelIndex &index)
 {
-   QString tabName = index.data().toString();//获取当前点击的行索引号
+   tableName = index.data().toString();//获取当前点击的行索引号
    model = new QSqlTableModel(this);
-   model->setTable(tabName);
+   model->setTable(tableName);
    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);//自动调整列宽
    ui->tableView->resizeRowsToContents();//高度自适应
    ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section{background-color:rgb(40,143,218)};");//行表头颜色样式
@@ -203,6 +255,11 @@ void dataExport::on_searchBtn_clicked()
 void dataExport::slotContextMenu(QPoint pos)
 {
     popMenu->exec(QCursor::pos());
+}
+
+void dataExport::slotContextMenu2(QPoint pos)
+{
+    popMenu2->exec(QCursor::pos());
 }
 //自动搜索
 void dataExport::on_lineEdit_textChanged(const QString &arg1)
